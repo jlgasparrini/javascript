@@ -13,7 +13,7 @@ module.exports = {
   // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
   rules: {
     // Specify whether double or single quotes should be used in JSX attributes
-    // http://eslint.org/docs/rules/jsx-quotes
+    // https://eslint.org/docs/rules/jsx-quotes
     'jsx-quotes': ['error', 'prefer-double'],
 
     'class-methods-use-this': ['error', {
@@ -29,6 +29,7 @@ module.exports = {
         'componentWillUpdate',
         'componentDidUpdate',
         'componentWillUnmount',
+        'componentDidCatch',
       ],
     }],
 
@@ -142,7 +143,8 @@ module.exports = {
 
     // Prevent usage of setState in componentDidMount
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-mount-set-state.md
-    'react/no-did-mount-set-state': 'error',
+    // this is necessary for server-rendering
+    'react/no-did-mount-set-state': 'off',
 
     // Prevent usage of setState in componentDidUpdate
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md
@@ -186,7 +188,11 @@ module.exports = {
 
     // Prevent missing props validation in a React component definition
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md
-    'react/prop-types': ['error', { ignore: [], customValidators: [], skipUndeclared: false }],
+    'react/prop-types': ['error', {
+      ignore: [],
+      customValidators: [],
+      skipUndeclared: false
+    }],
 
     // Prevent missing React when using JSX
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
@@ -324,18 +330,15 @@ module.exports = {
 
     // Enforce all defaultProps have a corresponding non-required PropType
     // https://github.com/yannickcr/eslint-plugin-react/blob/9e13ae2c51e44872b45cc15bf1ac3a72105bdd0e/docs/rules/default-props-match-prop-types.md
-    // TODO: enable, semver-minor
-    'react/default-props-match-prop-types': ['off', { allowRequiredDefaults: false }],
+    'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: false }],
 
     // Prevent usage of shouldComponentUpdate when extending React.PureComponent
     // https://github.com/yannickcr/eslint-plugin-react/blob/9e13ae2c51e44872b45cc15bf1ac3a72105bdd0e/docs/rules/no-redundant-should-component-update.md
-    // TODO: enable, semver-major
-    'react/no-redundant-should-component-update': 'off',
+    'react/no-redundant-should-component-update': 'error',
 
     // Prevent unused state values
-    // https://github.com/yannickcr/eslint-plugin-react/pull/1103/files
-    // TODO: enable? semver-major
-    'react/no-unused-state': 'off',
+    // https://github.com/yannickcr/eslint-plugin-react/pull/1103/
+    'react/no-unused-state': 'error',
 
     // Enforces consistent naming for boolean props
     // https://github.com/yannickcr/eslint-plugin-react/blob/73abadb697034b5ccb514d79fb4689836fe61f91/docs/rules/boolean-prop-naming.md
@@ -346,8 +349,11 @@ module.exports = {
 
     // Prevents common casing typos
     // https://github.com/yannickcr/eslint-plugin-react/blob/73abadb697034b5ccb514d79fb4689836fe61f91/docs/rules/no-typos.md
-    // TODO: enable, semver-major
-    'react/no-typos': 'off',
+    'react/no-typos': 'error',
+
+    // Enforce curly braces or disallow unnecessary curly braces in JSX props and/or children
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-curly-brace-presence.md
+    'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }]
   },
 
   settings: {
@@ -358,7 +364,7 @@ module.exports = {
     },
     react: {
       pragma: 'React',
-      version: '15.0'
+      version: '16.0'
     },
     propWrapperFunctions: [
       'forbidExtraProps', // https://www.npmjs.com/package/airbnb-prop-types

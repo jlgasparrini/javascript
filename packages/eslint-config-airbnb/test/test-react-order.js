@@ -11,12 +11,14 @@ const cli = new CLIEngine({
   rules: {
     // It is okay to import devDependencies in tests.
     'import/no-extraneous-dependencies': [2, { devDependencies: true }],
+    // this doesn't matter for tests
+    'lines-between-class-members': 0,
   },
 });
 
 function lint(text) {
-  // @see http://eslint.org/docs/developer-guide/nodejs-api.html#executeonfiles
-  // @see http://eslint.org/docs/developer-guide/nodejs-api.html#executeontext
+  // @see https://eslint.org/docs/developer-guide/nodejs-api.html#executeonfiles
+  // @see https://eslint.org/docs/developer-guide/nodejs-api.html#executeontext
   const linter = cli.executeOnText(text);
   return linter.results[0];
 }

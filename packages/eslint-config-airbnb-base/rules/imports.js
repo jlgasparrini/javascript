@@ -13,11 +13,12 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.json']
+        extensions: ['.mjs', '.js', '.json']
       }
     },
     'import/extensions': [
       '.js',
+      '.mjs',
       '.jsx',
     ],
     'import/core-modules': [
@@ -37,7 +38,7 @@ module.exports = {
 
     // ensure named imports coupled with named exports
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/named.md#when-not-to-use-it
-    'import/named': 'off',
+    'import/named': 'error',
 
     // ensure default import coupled with default export
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/default.md#when-not-to-use-it
@@ -84,6 +85,7 @@ module.exports = {
         '**/gulpfile.js', // gulp config
         '**/gulpfile.*.js', // gulp config
         '**/Gruntfile{,.js}', // grunt config
+        '**/protractor.conf.js', // protractor config
         '**/protractor.conf.*.js', // protractor config
       ],
       optionalDependencies: false,
@@ -132,6 +134,7 @@ module.exports = {
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/extensions.md
     'import/extensions': ['error', 'always', {
       js: 'never',
+      mjs: 'never',
       jsx: 'never',
     }],
 
@@ -203,5 +206,10 @@ module.exports = {
       allowLiteral: false,
       allowObject: false,
     }],
+
+    // This rule enforces that all exports are declared at the bottom of the file.
+    // https://github.com/benmosher/eslint-plugin-import/blob/98acd6afd04dcb6920b81330114e146dc8532ea4/docs/rules/exports-last.md
+    // TODO: enable?
+    'import/exports-last': 'off',
   },
 };
